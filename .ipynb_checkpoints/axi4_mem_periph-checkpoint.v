@@ -2,7 +2,7 @@
 module axi4_mem_periph #(
 	parameter AXI_TEST = 0,
 	parameter VERBOSE = 0,
-    parameter LOG_INPUT_NUM =3,
+    parameter LOG_INPUT_NUM =4,  //change here
 	parameter DATAWIDTH =32,
 	parameter SIGNED = 0,
 	parameter ASCENDING =1
@@ -44,10 +44,10 @@ module axi4_mem_periph #(
 
     
     reg rst,x_valid;
-    //reg [DATAWIDTH*(2**LOG_INPUT_NUM)-1:0] x;
-    //wire [DATAWIDTH*(2**LOG_INPUT_NUM)-1:0] y;
-    reg [DATAWIDTH-1:0] x[0:(2**LOG_INPUT_NUM)-1];
-    wire [DATAWIDTH-1:0] y[0:(2**LOG_INPUT_NUM)-1];
+    wire [DATAWIDTH*(2**LOG_INPUT_NUM)-1:0] x;
+    wire [DATAWIDTH*(2**LOG_INPUT_NUM)-1:0] y;
+    reg [DATAWIDTH-1:0] x_1[0:(2**LOG_INPUT_NUM)-1];
+    wire [DATAWIDTH-1:0] y_1[0:(2**LOG_INPUT_NUM)-1];
     wire [0:0] y_valid;
     bitonic_sorting_top #
     (
@@ -60,11 +60,18 @@ module axi4_mem_periph #(
         .clk(clk),
         .rst(rst),
 		.x_valid(x_valid),
-        .x({x[7],x[6],x[5],x[4],x[3],x[2],x[1],x[0]}),
-        .y({y[7],y[6],y[5],y[4],y[3],y[2],y[1],y[0]}),
+        .x(x),
+        .y(y),
 		.y_valid(y_valid)
     );
-    reg [31:0]   sortmem [0:8]; /* verilator public */
+    
+    genvar j;
+    for (j=0;j<2**LOG_INPUT_NUM;j=j+1) begin
+        assign x[32*(j+1)-1:32*j] = x_1[j];
+        assign y_1[j] = y[32*(j+1)-1:32*j];
+    end
+    
+    reg [31:0]   sortmem [0:2**(LOG_INPUT_NUM)]; /* verilator public */
 
 	assign tests_passed = 1;
 	// Could not load this from the test bench for some reason
@@ -134,21 +141,16 @@ module axi4_mem_periph #(
 		end else
 		if ((latched_raddr >= 32'h3000_0000) && (latched_raddr < 32'h3100_0000)) begin
             mem_axi_rdata <= sortmem[(latched_raddr-'h3000_0000)>>2];
-            //$display("reading from %08x", latched_raddr);
             mem_axi_rvalid <= 1;
 			latched_raddr_en = 0; 
 		end else
             if (latched_raddr == 32'h4000_0000) begin
                 mem_axi_rdata <= y_valid;
-                //$display("yvaliddata=%08x", mem_axi_rdata);
             mem_axi_rvalid <= 1;
 			latched_raddr_en = 0;
 		end else
 		if ((latched_raddr >= 32'h5000_0004) && (latched_raddr < 32'h5100_0000)) begin
-			//mem_axi_rdata <= y[DATAWIDTH*(latched_raddr+1-'h5000_0004)-1:DATAWIDTH*(latched_raddr-'h5000_0004)];
-            mem_axi_rdata <= y[(latched_raddr-'h5000_0004)>>2];
-            //$display("ydata=%08x", y[(latched_raddr-'h5000_0004)>>2]);
-            //mem_axi_rdata <= y[31:0];
+            mem_axi_rdata <= y_1[(latched_raddr-'h5000_0004)>>2];
             mem_axi_rvalid <= 1;
 			latched_raddr_en = 0;
 		end else begin
@@ -195,10 +197,7 @@ module axi4_mem_periph #(
 			x_valid <= 1;
 		end else
 		if ((latched_waddr >= 32'h4000_0008) && (latched_waddr < 32'h4200_0000)) begin
-            //x[DATAWIDTH*(latched_waddr+1-'h4000_0008)-1:DATAWIDTH*(latched_waddr-'h4000_0008)] <= latched_wdata[DATAWIDTH-1:0];
-            x[(latched_waddr - 'h4000_0008)>>2] <= latched_wdata;
-            //$display("writing to %08x", latched_waddr);
-            //x[31:0] <= latched_wdata[DATAWIDTH-1:0];
+            x_1[(latched_waddr - 'h4000_0008)>>2] <= latched_wdata;
 		end else begin
 			$display("OUT-OF-BOUNDS MEMORY WRITE TO %08x", latched_waddr);
             $finish;
