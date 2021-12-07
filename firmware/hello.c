@@ -33,8 +33,6 @@ void write_outputs(void);
 void read_inputs(void){
     volatile int *p1 = (int *)SORTMEM;
     int n=*p1;
-    print_str("number =");
-        print_dec(*p1);
     p1++;
     volatile int *p2 = (int *)X_BASE;
     for(int i=0;i<n;i++){
@@ -80,8 +78,8 @@ void hello(void){
     merge(a,8);
     int t_end   = get_num_cycles();
     print_str("Sorted the data in ");
-	print_dec(t_end - t_start);
-    print_str("Reading input\n");*/
+	print_dec(t_end - t_start);*/
+    print_str("Reading input\n");
     read_inputs();
     print_str("Sorting\n");
     int t_start = get_num_cycles();
