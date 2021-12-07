@@ -8,13 +8,13 @@
 //#define Y_VALID 0x50000000
 #define Y_BASE 0x50000004
 
-void read_inputs(void);
+int read_inputs(int a[]);
 void sort(void);
 void write_outputs(void);
 void bubble_c(int a[],int n);
+void merge_c(int a[],int low,int high);
 
-
-/*void merge(int a[],int low,int high){
+void merge_c(int a[],int low,int high){
     if(low==high){
         return;
     }
@@ -27,8 +27,8 @@ void bubble_c(int a[],int n);
         }
 
     }
-    merge(a,low,(low+high)>>1);
-    merge(a,((low+high)>>1)+1,high);
+    merge_c(a,low,(low+high)>>1);
+    merge_c(a,((low+high)>>1)+1,high);
     int c1=low,c2=((low+high)>>1)+1,i;
     int t[high-low+1];
     for(i=0;c1<=((low+high)>>1)&&c2<=high;i++){
@@ -53,7 +53,7 @@ void bubble_c(int a[],int n);
     }
     for(i=0;i<=high-low;i++)
     a[low+i]=t[i];
-}*/
+}
 
 void bubble_c(int a[],int n){
         for(int i=0;i<n;i++){
@@ -67,7 +67,7 @@ void bubble_c(int a[],int n){
         }
 }
 
-void read_inputs(void){
+int read_inputs(int a[]){
     volatile int *p1 = (int *)SORTMEM;
     int n=*p1;
     p1++;
@@ -78,9 +78,11 @@ void read_inputs(void){
         print_dec(x);
         print_str("\n");
         *p2=x;
+        a[i]=x;
         p1++;
         p2++;
     }
+    return n;
 }
 void sort(void){
     volatile int *p = (int *)RST;
@@ -111,26 +113,36 @@ void write_outputs(void){
 
 
 void hello(void){
-    int a[16];
-    for(int i=0;i<16;i++){
-            a[i]=i;
-    }
+    int a[2048];
+    print_str("Reading input\n");
+    int n=read_inputs(a);
+    
+    print_str("Sorting in C using merge sort\n");
     int t_start = get_num_cycles();
-    bubble_c(a,16);
+    merge_c(a,0,n-1);
     int t_end   = get_num_cycles();
-    print_str("Sorted the data in software in ");
+    print_str("Sorted the data in ");
 	print_dec(t_end - t_start);
     print_str(" cycles.\n");
-    print_str("Reading input\n");
-    read_inputs();
-    print_str("Sorting\n");
+    
+    print_str("Sorting in C using bubble sort\n");
+    t_start = get_num_cycles();
+    bubble_c(a,n);
+    t_end   = get_num_cycles();
+    print_str("Sorted the data in ");
+    print_dec(t_end - t_start);
+    print_str(" cycles.\n");
+    
+    print_str("Sorting in hardware\n");
     t_start = get_num_cycles();
     sort();
     t_end   = get_num_cycles();
-    print_str("Writing output\n");
-    write_outputs();
-    print_str("Sorted the data in hardware in ");
+    print_str("Sorted the data in ");
 	print_dec(t_end - t_start);
 	print_str(" cycles.\n");
+    
+    print_str("Writing output\n");
+    write_outputs();
+    
     print_str("\nAll done...\n");
 }

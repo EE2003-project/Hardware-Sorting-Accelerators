@@ -134,7 +134,7 @@ module axi4_mem_periph #(
 	task handle_axi_rvalid; begin
 		if (verbose)
 			$display("RD: ADDR=%08x DATA=%08x%s", latched_raddr, memory[latched_raddr >> 2], latched_rinsn ? " INSN" : "");
-		if (latched_raddr < 2048*1024) begin
+		if (latched_raddr < 32'h3000_0000) begin
 			mem_axi_rdata <= memory[latched_raddr >> 2];
 			mem_axi_rvalid <= 1;
 			latched_raddr_en = 0;
