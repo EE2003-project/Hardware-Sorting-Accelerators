@@ -26,8 +26,9 @@ module testbench #(
 	initial begin
 		if ($test$plusargs("vcd")) begin
 			$dumpfile("testbench.vcd");
-			//$dumpvars(0, testbench);
-            $dumpvars;
+			$dumpvars(0, testbench);
+            
+            //$dumpvars;
         end
 		repeat (1000000) @(posedge clk);
 		$display("TIMEOUT");

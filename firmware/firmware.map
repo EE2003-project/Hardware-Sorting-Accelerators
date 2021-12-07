@@ -87,7 +87,7 @@ mem              0x0000000000000000 0x00000000001f8000
 Linker script and memory map
 
 
-.memory         0x0000000000000000     0xce84
+.memory         0x0000000000000000     0xce40
                 0x0000000000000000                . = 0x0
  start*(.text)
  *(.text)
@@ -152,7 +152,7 @@ Linker script and memory map
                 0x000000000000077e                print_str
                 0x0000000000000790                print_dec
                 0x00000000000007e0                print_hex
- .text          0x0000000000000806      0x214 firmware/hello.o
+ .text          0x0000000000000806      0x1ec firmware/hello.o
                 0x0000000000000806                get_num_cycles
                 0x000000000000080c                get_num_instr
                 0x0000000000000812                sort_print_chr
@@ -160,458 +160,456 @@ Linker script and memory map
                 0x000000000000082c                sort_print_dec
                 0x000000000000087c                sort_print_header
                 0x00000000000008ba                read_inputs
-                0x000000000000091e                sort
-                0x000000000000097e                write_outputs
-                0x00000000000009ce                hello
- .text          0x0000000000000a1a      0x184 firmware/sieve.o
-                0x0000000000000ab4                sieve
- .text          0x0000000000000b9e      0x2f6 firmware/multest.o
-                0x0000000000000bbc                multest
- .text          0x0000000000000e94      0x11c firmware/stats.o
-                0x0000000000000f28                stats
- *fill*         0x0000000000000fb0        0x0 
- .text          0x0000000000000fb0      0x540 tests/xor.o
-                0x0000000000000fb0                xor
- .text          0x00000000000014f0      0x544 tests/or.o
-                0x00000000000014f0                or
- .text          0x0000000000001a34      0x4f8 tests/sh.o
-                0x0000000000001a34                sh
- .text          0x0000000000001f2c      0x540 tests/sub.o
-                0x0000000000001f2c                sub
- .text          0x000000000000246c      0x2cc tests/lb.o
-                0x000000000000246c                lb
- .text          0x0000000000002738      0x61c tests/sra.o
-                0x0000000000002738                sra
- .text          0x0000000000002d54      0x340 tests/blt.o
-                0x0000000000002d54                blt
- .text          0x0000000000003094      0x33c tests/srai.o
-                0x0000000000003094                srai
- .text          0x00000000000033d0      0x340 tests/beq.o
-                0x00000000000033d0                beq
- .text          0x0000000000003710      0x30c tests/addi.o
-                0x0000000000003710                addi
- .text          0x0000000000003a1c      0x548 tests/mul.o
-                0x0000000000003a1c                mul
- .text          0x0000000000003f64      0x164 tests/divu.o
-                0x0000000000003f64                divu
- .text          0x00000000000040c8      0x30c tests/lw.o
-                0x00000000000040c8                lw
- .text          0x00000000000043d4      0x15c tests/div.o
-                0x00000000000043d4                div
- *fill*         0x0000000000004530        0x0 
- .text          0x0000000000004530       0xcc tests/auipc.o
-                0x0000000000004530                auipc
- .text          0x00000000000045fc      0x474 tests/sb.o
-                0x00000000000045fc                sb
- .text          0x0000000000004a70      0x3d8 tests/bgeu.o
-                0x0000000000004a70                bgeu
- .text          0x0000000000004e48      0x184 tests/jalr.o
-                0x0000000000004e48                jalr
- .text          0x0000000000004fcc      0x504 tests/sw.o
-                0x0000000000004fcc                sw
- .text          0x00000000000054d0      0x268 tests/xori.o
-                0x00000000000054d0                xori
- .text          0x0000000000005738      0x5ec tests/sll.o
-                0x0000000000005738                sll
- .text          0x0000000000005d24      0x54c tests/mulhu.o
-                0x0000000000005d24                mulhu
- .text          0x0000000000006270      0x2f8 tests/slti.o
-                0x0000000000006270                slti
- .text          0x0000000000006568      0x548 tests/slt.o
-                0x0000000000006568                slt
- .text          0x0000000000006ab0      0x2cc tests/lbu.o
-                0x0000000000006ab0                lbu
- .text          0x0000000000006d7c      0x300 tests/lhu.o
-                0x0000000000006d7c                lhu
- .text          0x000000000000707c       0xe0 tests/lui.o
-                0x000000000000707c                lui
- .text          0x000000000000715c      0x378 tests/bltu.o
-                0x000000000000715c                bltu
- .text          0x00000000000074d4      0x160 tests/remu.o
-                0x00000000000074d4                remu
- .text          0x0000000000007634       0x54 tests/simple.o
-                0x0000000000007634                simple
- .text          0x0000000000007688      0x308 tests/slli.o
-                0x0000000000007688                slli
- .text          0x0000000000007990      0x244 tests/andi.o
-                0x0000000000007990                andi
- .text          0x0000000000007bd4      0x25c tests/ori.o
-                0x0000000000007bd4                ori
- .text          0x0000000000007e30      0x2ec tests/lh.o
-                0x0000000000007e30                lh
- .text          0x000000000000811c      0x63c tests/srl.o
-                0x000000000000811c                srl
- .text          0x0000000000008758       0xd8 tests/jal.o
-                0x0000000000008758                jal
- .text          0x0000000000008830      0x560 tests/add.o
-                0x0000000000008830                add
- .text          0x0000000000008d90      0x538 tests/and.o
-                0x0000000000008d90                and
- .text          0x00000000000092c8      0x338 tests/srli.o
-                0x00000000000092c8                srli
- .text          0x0000000000009600       0xbc tests/j.o
-                0x0000000000009600                j
- .text          0x00000000000096bc      0x344 tests/bne.o
-                0x00000000000096bc                bne
- .text          0x0000000000009a00      0x3a0 tests/bge.o
-                0x0000000000009a00                bge
- .text          0x0000000000009da0      0x15c tests/rem.o
-                0x0000000000009da0                rem
- .text          0x0000000000009efc      0x54c tests/mulh.o
-                0x0000000000009efc                mulh
- .text          0x000000000000a448      0x54c tests/mulhsu.o
-                0x000000000000a448                mulhsu
- .text          0x000000000000a994      0x624 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
-                0x000000000000a994                __divdi3
- .text          0x000000000000afb8      0x548 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
-                0x000000000000afb8                __moddi3
- .text          0x000000000000b500      0x5d4 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
-                0x000000000000b500                __udivdi3
- .text          0x000000000000bad4      0x4f0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
-                0x000000000000bad4                __umoddi3
- .text          0x000000000000bfc4       0x24 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(muldi3.o)
-                0x000000000000bfc4                __mulsi3
- .text          0x000000000000bfe8       0x90 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
-                0x000000000000bfe8                __muldi3
- .text          0x000000000000c078       0xb4 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(div.o)
-                0x000000000000c078                __divsi3
-                0x000000000000c080                __udivsi3
-                0x000000000000c0c8                __umodsi3
-                0x000000000000c0fc                __modsi3
- .text          0x000000000000c12c        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
+                0x000000000000092a                sort
+                0x000000000000094a                write_outputs
+                0x00000000000009a6                hello
+ .text          0x00000000000009f2      0x184 firmware/sieve.o
+                0x0000000000000a8c                sieve
+ .text          0x0000000000000b76      0x2ee firmware/multest.o
+                0x0000000000000b94                multest
+ .text          0x0000000000000e64      0x11c firmware/stats.o
+                0x0000000000000ef8                stats
+ .text          0x0000000000000f80      0x540 tests/xor.o
+                0x0000000000000f80                xor
+ .text          0x00000000000014c0      0x544 tests/or.o
+                0x00000000000014c0                or
+ .text          0x0000000000001a04      0x4f8 tests/sh.o
+                0x0000000000001a04                sh
+ .text          0x0000000000001efc      0x540 tests/sub.o
+                0x0000000000001efc                sub
+ .text          0x000000000000243c      0x2cc tests/lb.o
+                0x000000000000243c                lb
+ .text          0x0000000000002708      0x61c tests/sra.o
+                0x0000000000002708                sra
+ .text          0x0000000000002d24      0x340 tests/blt.o
+                0x0000000000002d24                blt
+ .text          0x0000000000003064      0x33c tests/srai.o
+                0x0000000000003064                srai
+ .text          0x00000000000033a0      0x340 tests/beq.o
+                0x00000000000033a0                beq
+ .text          0x00000000000036e0      0x30c tests/addi.o
+                0x00000000000036e0                addi
+ .text          0x00000000000039ec      0x548 tests/mul.o
+                0x00000000000039ec                mul
+ .text          0x0000000000003f34      0x164 tests/divu.o
+                0x0000000000003f34                divu
+ .text          0x0000000000004098      0x30c tests/lw.o
+                0x0000000000004098                lw
+ .text          0x00000000000043a4      0x15c tests/div.o
+                0x00000000000043a4                div
+ .text          0x0000000000004500       0xcc tests/auipc.o
+                0x0000000000004500                auipc
+ .text          0x00000000000045cc      0x474 tests/sb.o
+                0x00000000000045cc                sb
+ .text          0x0000000000004a40      0x3d8 tests/bgeu.o
+                0x0000000000004a40                bgeu
+ .text          0x0000000000004e18      0x184 tests/jalr.o
+                0x0000000000004e18                jalr
+ .text          0x0000000000004f9c      0x504 tests/sw.o
+                0x0000000000004f9c                sw
+ .text          0x00000000000054a0      0x268 tests/xori.o
+                0x00000000000054a0                xori
+ .text          0x0000000000005708      0x5ec tests/sll.o
+                0x0000000000005708                sll
+ .text          0x0000000000005cf4      0x54c tests/mulhu.o
+                0x0000000000005cf4                mulhu
+ .text          0x0000000000006240      0x2f8 tests/slti.o
+                0x0000000000006240                slti
+ .text          0x0000000000006538      0x548 tests/slt.o
+                0x0000000000006538                slt
+ .text          0x0000000000006a80      0x2cc tests/lbu.o
+                0x0000000000006a80                lbu
+ .text          0x0000000000006d4c      0x300 tests/lhu.o
+                0x0000000000006d4c                lhu
+ .text          0x000000000000704c       0xe0 tests/lui.o
+                0x000000000000704c                lui
+ .text          0x000000000000712c      0x378 tests/bltu.o
+                0x000000000000712c                bltu
+ .text          0x00000000000074a4      0x160 tests/remu.o
+                0x00000000000074a4                remu
+ .text          0x0000000000007604       0x54 tests/simple.o
+                0x0000000000007604                simple
+ .text          0x0000000000007658      0x308 tests/slli.o
+                0x0000000000007658                slli
+ .text          0x0000000000007960      0x244 tests/andi.o
+                0x0000000000007960                andi
+ .text          0x0000000000007ba4      0x25c tests/ori.o
+                0x0000000000007ba4                ori
+ .text          0x0000000000007e00      0x2ec tests/lh.o
+                0x0000000000007e00                lh
+ .text          0x00000000000080ec      0x63c tests/srl.o
+                0x00000000000080ec                srl
+ .text          0x0000000000008728       0xd8 tests/jal.o
+                0x0000000000008728                jal
+ .text          0x0000000000008800      0x560 tests/add.o
+                0x0000000000008800                add
+ .text          0x0000000000008d60      0x538 tests/and.o
+                0x0000000000008d60                and
+ .text          0x0000000000009298      0x338 tests/srli.o
+                0x0000000000009298                srli
+ .text          0x00000000000095d0       0xbc tests/j.o
+                0x00000000000095d0                j
+ .text          0x000000000000968c      0x344 tests/bne.o
+                0x000000000000968c                bne
+ .text          0x00000000000099d0      0x3a0 tests/bge.o
+                0x00000000000099d0                bge
+ .text          0x0000000000009d70      0x15c tests/rem.o
+                0x0000000000009d70                rem
+ .text          0x0000000000009ecc      0x54c tests/mulh.o
+                0x0000000000009ecc                mulh
+ .text          0x000000000000a418      0x54c tests/mulhsu.o
+                0x000000000000a418                mulhsu
+ .text          0x000000000000a964      0x624 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
+                0x000000000000a964                __divdi3
+ .text          0x000000000000af88      0x548 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
+                0x000000000000af88                __moddi3
+ .text          0x000000000000b4d0      0x5d4 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
+                0x000000000000b4d0                __udivdi3
+ .text          0x000000000000baa4      0x4f0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
+                0x000000000000baa4                __umoddi3
+ .text          0x000000000000bf94       0x24 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(muldi3.o)
+                0x000000000000bf94                __mulsi3
+ .text          0x000000000000bfb8       0x90 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
+                0x000000000000bfb8                __muldi3
+ .text          0x000000000000c048       0xb4 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(div.o)
+                0x000000000000c048                __divsi3
+                0x000000000000c050                __udivsi3
+                0x000000000000c098                __umodsi3
+                0x000000000000c0cc                __modsi3
+ .text          0x000000000000c0fc        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
  *(*)
- .data          0x000000000000c12c        0x0 firmware/start.o
- .bss           0x000000000000c12c        0x0 firmware/start.o
+ .data          0x000000000000c0fc        0x0 firmware/start.o
+ .bss           0x000000000000c0fc        0x0 firmware/start.o
  .riscv.attributes
-                0x000000000000c12c       0x24 firmware/start.o
- .data          0x000000000000c150        0x0 firmware/irq.o
- .bss           0x000000000000c150        0x0 firmware/irq.o
+                0x000000000000c0fc       0x24 firmware/start.o
+ .data          0x000000000000c120        0x0 firmware/irq.o
+ .bss           0x000000000000c120        0x0 firmware/irq.o
  .rodata.str1.4
-                0x000000000000c150      0x167 firmware/irq.o
+                0x000000000000c120      0x167 firmware/irq.o
                                         0x16b (size before relaxing)
- *fill*         0x000000000000c2b7        0x1 
- .sbss          0x000000000000c2b8        0xc firmware/irq.o
- .comment       0x000000000000c2c4       0x11 firmware/irq.o
+ *fill*         0x000000000000c287        0x1 
+ .sbss          0x000000000000c288        0xc firmware/irq.o
+ .comment       0x000000000000c294       0x11 firmware/irq.o
                                          0x12 (size before relaxing)
  .riscv.attributes
-                0x000000000000c2d5       0x21 firmware/irq.o
- .data          0x000000000000c2f6        0x0 firmware/print.o
- .bss           0x000000000000c2f6        0x0 firmware/print.o
- *fill*         0x000000000000c2f6        0x2 
+                0x000000000000c2a5       0x21 firmware/irq.o
+ .data          0x000000000000c2c6        0x0 firmware/print.o
+ .bss           0x000000000000c2c6        0x0 firmware/print.o
+ *fill*         0x000000000000c2c6        0x2 
  .rodata.str1.4
-                0x000000000000c2f8       0x11 firmware/print.o
- .comment       0x000000000000c309       0x12 firmware/print.o
+                0x000000000000c2c8       0x11 firmware/print.o
+ .comment       0x000000000000c2d9       0x12 firmware/print.o
  .riscv.attributes
-                0x000000000000c309       0x21 firmware/print.o
- .data          0x000000000000c32a        0x0 firmware/hello.o
- .bss           0x000000000000c32a        0x0 firmware/hello.o
- *fill*         0x000000000000c32a        0x2 
+                0x000000000000c2d9       0x21 firmware/print.o
+ .data          0x000000000000c2fa        0x0 firmware/hello.o
+ .bss           0x000000000000c2fa        0x0 firmware/hello.o
+ *fill*         0x000000000000c2fa        0x2 
  .rodata.str1.4
-                0x000000000000c32c       0x72 firmware/hello.o
-                                         0x76 (size before relaxing)
- .comment       0x000000000000c39e       0x12 firmware/hello.o
+                0x000000000000c2fc       0x5e firmware/hello.o
+                                         0x62 (size before relaxing)
+ .comment       0x000000000000c35a       0x12 firmware/hello.o
  .riscv.attributes
-                0x000000000000c39e       0x21 firmware/hello.o
- .data          0x000000000000c3bf        0x0 firmware/sieve.o
- .bss           0x000000000000c3bf        0x0 firmware/sieve.o
- *fill*         0x000000000000c3bf        0x1 
+                0x000000000000c35a       0x21 firmware/hello.o
+ .data          0x000000000000c37b        0x0 firmware/sieve.o
+ .bss           0x000000000000c37b        0x0 firmware/sieve.o
+ *fill*         0x000000000000c37b        0x1 
  .rodata.str1.4
-                0x000000000000c3c0       0x40 firmware/sieve.o
- .sbss          0x000000000000c400        0xc firmware/sieve.o
- .comment       0x000000000000c40c       0x12 firmware/sieve.o
+                0x000000000000c37c       0x40 firmware/sieve.o
+ .sbss          0x000000000000c3bc        0xc firmware/sieve.o
+ .comment       0x000000000000c3c8       0x12 firmware/sieve.o
  .riscv.attributes
-                0x000000000000c40c       0x21 firmware/sieve.o
- .data          0x000000000000c42d        0x0 firmware/multest.o
- .bss           0x000000000000c42d        0x0 firmware/multest.o
- *fill*         0x000000000000c42d        0x3 
+                0x000000000000c3c8       0x21 firmware/sieve.o
+ .data          0x000000000000c3e9        0x0 firmware/multest.o
+ .bss           0x000000000000c3e9        0x0 firmware/multest.o
+ *fill*         0x000000000000c3e9        0x3 
  .rodata.str1.4
-                0x000000000000c430       0x50 firmware/multest.o
+                0x000000000000c3ec       0x50 firmware/multest.o
                                          0x58 (size before relaxing)
- .sdata         0x000000000000c480        0x4 firmware/multest.o
- .comment       0x000000000000c484       0x12 firmware/multest.o
+ .sdata         0x000000000000c43c        0x4 firmware/multest.o
+ .comment       0x000000000000c440       0x12 firmware/multest.o
  .riscv.attributes
-                0x000000000000c484       0x21 firmware/multest.o
- .data          0x000000000000c4a5        0x0 firmware/stats.o
- .bss           0x000000000000c4a5        0x0 firmware/stats.o
- *fill*         0x000000000000c4a5        0x3 
+                0x000000000000c440       0x21 firmware/multest.o
+ .data          0x000000000000c461        0x0 firmware/stats.o
+ .bss           0x000000000000c461        0x0 firmware/stats.o
+ *fill*         0x000000000000c461        0x3 
  .rodata.str1.4
-                0x000000000000c4a8       0x3c firmware/stats.o
+                0x000000000000c464       0x3c firmware/stats.o
                                          0x3e (size before relaxing)
- .comment       0x000000000000c4e4       0x12 firmware/stats.o
+ .comment       0x000000000000c4a0       0x12 firmware/stats.o
  .riscv.attributes
-                0x000000000000c4e4       0x21 firmware/stats.o
- *fill*         0x000000000000c505        0x3 
- .data          0x000000000000c508        0x0 tests/xor.o
- .bss           0x000000000000c508        0x0 tests/xor.o
+                0x000000000000c4a0       0x21 firmware/stats.o
+ *fill*         0x000000000000c4c1        0x3 
+ .data          0x000000000000c4c4        0x0 tests/xor.o
+ .bss           0x000000000000c4c4        0x0 tests/xor.o
  .riscv.attributes
-                0x000000000000c508       0x1f tests/xor.o
- *fill*         0x000000000000c527        0x1 
- .data          0x000000000000c528        0x0 tests/or.o
- .bss           0x000000000000c528        0x0 tests/or.o
+                0x000000000000c4c4       0x1f tests/xor.o
+ *fill*         0x000000000000c4e3        0x1 
+ .data          0x000000000000c4e4        0x0 tests/or.o
+ .bss           0x000000000000c4e4        0x0 tests/or.o
  .riscv.attributes
-                0x000000000000c528       0x1f tests/or.o
- *fill*         0x000000000000c547        0x1 
- .data          0x000000000000c548       0x14 tests/sh.o
- .bss           0x000000000000c55c        0x0 tests/sh.o
+                0x000000000000c4e4       0x1f tests/or.o
+ *fill*         0x000000000000c503        0x1 
+ .data          0x000000000000c504       0x14 tests/sh.o
+ .bss           0x000000000000c518        0x0 tests/sh.o
  .riscv.attributes
-                0x000000000000c55c       0x1f tests/sh.o
+                0x000000000000c518       0x1f tests/sh.o
+ *fill*         0x000000000000c537        0x1 
+ .data          0x000000000000c538        0x0 tests/sub.o
+ .bss           0x000000000000c538        0x0 tests/sub.o
+ .riscv.attributes
+                0x000000000000c538       0x1f tests/sub.o
+ *fill*         0x000000000000c557        0x1 
+ .data          0x000000000000c558        0x4 tests/lb.o
+ .bss           0x000000000000c55c        0x0 tests/lb.o
+ .riscv.attributes
+                0x000000000000c55c       0x1f tests/lb.o
  *fill*         0x000000000000c57b        0x1 
- .data          0x000000000000c57c        0x0 tests/sub.o
- .bss           0x000000000000c57c        0x0 tests/sub.o
+ .data          0x000000000000c57c        0x0 tests/sra.o
+ .bss           0x000000000000c57c        0x0 tests/sra.o
  .riscv.attributes
-                0x000000000000c57c       0x1f tests/sub.o
+                0x000000000000c57c       0x1f tests/sra.o
  *fill*         0x000000000000c59b        0x1 
- .data          0x000000000000c59c        0x4 tests/lb.o
- .bss           0x000000000000c5a0        0x0 tests/lb.o
+ .data          0x000000000000c59c        0x0 tests/blt.o
+ .bss           0x000000000000c59c        0x0 tests/blt.o
  .riscv.attributes
-                0x000000000000c5a0       0x1f tests/lb.o
- *fill*         0x000000000000c5bf        0x1 
- .data          0x000000000000c5c0        0x0 tests/sra.o
- .bss           0x000000000000c5c0        0x0 tests/sra.o
+                0x000000000000c59c       0x1f tests/blt.o
+ *fill*         0x000000000000c5bb        0x1 
+ .data          0x000000000000c5bc        0x0 tests/srai.o
+ .bss           0x000000000000c5bc        0x0 tests/srai.o
  .riscv.attributes
-                0x000000000000c5c0       0x1f tests/sra.o
- *fill*         0x000000000000c5df        0x1 
- .data          0x000000000000c5e0        0x0 tests/blt.o
- .bss           0x000000000000c5e0        0x0 tests/blt.o
+                0x000000000000c5bc       0x1f tests/srai.o
+ *fill*         0x000000000000c5db        0x1 
+ .data          0x000000000000c5dc        0x0 tests/beq.o
+ .bss           0x000000000000c5dc        0x0 tests/beq.o
  .riscv.attributes
-                0x000000000000c5e0       0x1f tests/blt.o
- *fill*         0x000000000000c5ff        0x1 
- .data          0x000000000000c600        0x0 tests/srai.o
- .bss           0x000000000000c600        0x0 tests/srai.o
+                0x000000000000c5dc       0x1f tests/beq.o
+ *fill*         0x000000000000c5fb        0x1 
+ .data          0x000000000000c5fc        0x0 tests/addi.o
+ .bss           0x000000000000c5fc        0x0 tests/addi.o
  .riscv.attributes
-                0x000000000000c600       0x1f tests/srai.o
- *fill*         0x000000000000c61f        0x1 
- .data          0x000000000000c620        0x0 tests/beq.o
- .bss           0x000000000000c620        0x0 tests/beq.o
+                0x000000000000c5fc       0x1f tests/addi.o
+ *fill*         0x000000000000c61b        0x1 
+ .data          0x000000000000c61c        0x0 tests/mul.o
+ .bss           0x000000000000c61c        0x0 tests/mul.o
  .riscv.attributes
-                0x000000000000c620       0x1f tests/beq.o
- *fill*         0x000000000000c63f        0x1 
- .data          0x000000000000c640        0x0 tests/addi.o
- .bss           0x000000000000c640        0x0 tests/addi.o
+                0x000000000000c61c       0x1f tests/mul.o
+ *fill*         0x000000000000c63b        0x1 
+ .data          0x000000000000c63c        0x0 tests/divu.o
+ .bss           0x000000000000c63c        0x0 tests/divu.o
  .riscv.attributes
-                0x000000000000c640       0x1f tests/addi.o
- *fill*         0x000000000000c65f        0x1 
- .data          0x000000000000c660        0x0 tests/mul.o
- .bss           0x000000000000c660        0x0 tests/mul.o
+                0x000000000000c63c       0x1f tests/divu.o
+ *fill*         0x000000000000c65b        0x1 
+ .data          0x000000000000c65c       0x10 tests/lw.o
+ .bss           0x000000000000c66c        0x0 tests/lw.o
  .riscv.attributes
-                0x000000000000c660       0x1f tests/mul.o
- *fill*         0x000000000000c67f        0x1 
- .data          0x000000000000c680        0x0 tests/divu.o
- .bss           0x000000000000c680        0x0 tests/divu.o
+                0x000000000000c66c       0x1f tests/lw.o
+ *fill*         0x000000000000c68b        0x1 
+ .data          0x000000000000c68c        0x0 tests/div.o
+ .bss           0x000000000000c68c        0x0 tests/div.o
  .riscv.attributes
-                0x000000000000c680       0x1f tests/divu.o
- *fill*         0x000000000000c69f        0x1 
- .data          0x000000000000c6a0       0x10 tests/lw.o
- .bss           0x000000000000c6b0        0x0 tests/lw.o
+                0x000000000000c68c       0x1f tests/div.o
+ *fill*         0x000000000000c6ab        0x1 
+ .data          0x000000000000c6ac        0x0 tests/auipc.o
+ .bss           0x000000000000c6ac        0x0 tests/auipc.o
  .riscv.attributes
-                0x000000000000c6b0       0x1f tests/lw.o
- *fill*         0x000000000000c6cf        0x1 
- .data          0x000000000000c6d0        0x0 tests/div.o
- .bss           0x000000000000c6d0        0x0 tests/div.o
+                0x000000000000c6ac       0x1f tests/auipc.o
+ *fill*         0x000000000000c6cb        0x1 
+ .data          0x000000000000c6cc        0xa tests/sb.o
+ .bss           0x000000000000c6d6        0x0 tests/sb.o
  .riscv.attributes
-                0x000000000000c6d0       0x1f tests/div.o
- *fill*         0x000000000000c6ef        0x1 
- .data          0x000000000000c6f0        0x0 tests/auipc.o
- .bss           0x000000000000c6f0        0x0 tests/auipc.o
+                0x000000000000c6d6       0x1f tests/sb.o
+ *fill*         0x000000000000c6f5        0x3 
+ .data          0x000000000000c6f8        0x0 tests/bgeu.o
+ .bss           0x000000000000c6f8        0x0 tests/bgeu.o
  .riscv.attributes
-                0x000000000000c6f0       0x1f tests/auipc.o
- *fill*         0x000000000000c70f        0x1 
- .data          0x000000000000c710        0xa tests/sb.o
- .bss           0x000000000000c71a        0x0 tests/sb.o
+                0x000000000000c6f8       0x1f tests/bgeu.o
+ *fill*         0x000000000000c717        0x1 
+ .data          0x000000000000c718        0x0 tests/jalr.o
+ .bss           0x000000000000c718        0x0 tests/jalr.o
  .riscv.attributes
-                0x000000000000c71a       0x1f tests/sb.o
- *fill*         0x000000000000c739        0x3 
- .data          0x000000000000c73c        0x0 tests/bgeu.o
- .bss           0x000000000000c73c        0x0 tests/bgeu.o
+                0x000000000000c718       0x1f tests/jalr.o
+ *fill*         0x000000000000c737        0x1 
+ .data          0x000000000000c738       0x28 tests/sw.o
+ .bss           0x000000000000c760        0x0 tests/sw.o
  .riscv.attributes
-                0x000000000000c73c       0x1f tests/bgeu.o
- *fill*         0x000000000000c75b        0x1 
- .data          0x000000000000c75c        0x0 tests/jalr.o
- .bss           0x000000000000c75c        0x0 tests/jalr.o
+                0x000000000000c760       0x1f tests/sw.o
+ *fill*         0x000000000000c77f        0x1 
+ .data          0x000000000000c780        0x0 tests/xori.o
+ .bss           0x000000000000c780        0x0 tests/xori.o
  .riscv.attributes
-                0x000000000000c75c       0x1f tests/jalr.o
- *fill*         0x000000000000c77b        0x1 
- .data          0x000000000000c77c       0x28 tests/sw.o
- .bss           0x000000000000c7a4        0x0 tests/sw.o
+                0x000000000000c780       0x1f tests/xori.o
+ *fill*         0x000000000000c79f        0x1 
+ .data          0x000000000000c7a0        0x0 tests/sll.o
+ .bss           0x000000000000c7a0        0x0 tests/sll.o
  .riscv.attributes
-                0x000000000000c7a4       0x1f tests/sw.o
- *fill*         0x000000000000c7c3        0x1 
- .data          0x000000000000c7c4        0x0 tests/xori.o
- .bss           0x000000000000c7c4        0x0 tests/xori.o
+                0x000000000000c7a0       0x1f tests/sll.o
+ *fill*         0x000000000000c7bf        0x1 
+ .data          0x000000000000c7c0        0x0 tests/mulhu.o
+ .bss           0x000000000000c7c0        0x0 tests/mulhu.o
  .riscv.attributes
-                0x000000000000c7c4       0x1f tests/xori.o
- *fill*         0x000000000000c7e3        0x1 
- .data          0x000000000000c7e4        0x0 tests/sll.o
- .bss           0x000000000000c7e4        0x0 tests/sll.o
+                0x000000000000c7c0       0x1f tests/mulhu.o
+ *fill*         0x000000000000c7df        0x1 
+ .data          0x000000000000c7e0        0x0 tests/slti.o
+ .bss           0x000000000000c7e0        0x0 tests/slti.o
  .riscv.attributes
-                0x000000000000c7e4       0x1f tests/sll.o
- *fill*         0x000000000000c803        0x1 
- .data          0x000000000000c804        0x0 tests/mulhu.o
- .bss           0x000000000000c804        0x0 tests/mulhu.o
+                0x000000000000c7e0       0x1f tests/slti.o
+ *fill*         0x000000000000c7ff        0x1 
+ .data          0x000000000000c800        0x0 tests/slt.o
+ .bss           0x000000000000c800        0x0 tests/slt.o
  .riscv.attributes
-                0x000000000000c804       0x1f tests/mulhu.o
- *fill*         0x000000000000c823        0x1 
- .data          0x000000000000c824        0x0 tests/slti.o
- .bss           0x000000000000c824        0x0 tests/slti.o
+                0x000000000000c800       0x1f tests/slt.o
+ *fill*         0x000000000000c81f        0x1 
+ .data          0x000000000000c820        0x4 tests/lbu.o
+ .bss           0x000000000000c824        0x0 tests/lbu.o
  .riscv.attributes
-                0x000000000000c824       0x1f tests/slti.o
+                0x000000000000c824       0x1f tests/lbu.o
  *fill*         0x000000000000c843        0x1 
- .data          0x000000000000c844        0x0 tests/slt.o
- .bss           0x000000000000c844        0x0 tests/slt.o
+ .data          0x000000000000c844        0x8 tests/lhu.o
+ .bss           0x000000000000c84c        0x0 tests/lhu.o
  .riscv.attributes
-                0x000000000000c844       0x1f tests/slt.o
- *fill*         0x000000000000c863        0x1 
- .data          0x000000000000c864        0x4 tests/lbu.o
- .bss           0x000000000000c868        0x0 tests/lbu.o
+                0x000000000000c84c       0x1f tests/lhu.o
+ *fill*         0x000000000000c86b        0x1 
+ .data          0x000000000000c86c        0x0 tests/lui.o
+ .bss           0x000000000000c86c        0x0 tests/lui.o
  .riscv.attributes
-                0x000000000000c868       0x1f tests/lbu.o
- *fill*         0x000000000000c887        0x1 
- .data          0x000000000000c888        0x8 tests/lhu.o
- .bss           0x000000000000c890        0x0 tests/lhu.o
+                0x000000000000c86c       0x1f tests/lui.o
+ *fill*         0x000000000000c88b        0x1 
+ .data          0x000000000000c88c        0x0 tests/bltu.o
+ .bss           0x000000000000c88c        0x0 tests/bltu.o
  .riscv.attributes
-                0x000000000000c890       0x1f tests/lhu.o
- *fill*         0x000000000000c8af        0x1 
- .data          0x000000000000c8b0        0x0 tests/lui.o
- .bss           0x000000000000c8b0        0x0 tests/lui.o
+                0x000000000000c88c       0x1f tests/bltu.o
+ *fill*         0x000000000000c8ab        0x1 
+ .data          0x000000000000c8ac        0x0 tests/remu.o
+ .bss           0x000000000000c8ac        0x0 tests/remu.o
  .riscv.attributes
-                0x000000000000c8b0       0x1f tests/lui.o
- *fill*         0x000000000000c8cf        0x1 
- .data          0x000000000000c8d0        0x0 tests/bltu.o
- .bss           0x000000000000c8d0        0x0 tests/bltu.o
+                0x000000000000c8ac       0x1f tests/remu.o
+ *fill*         0x000000000000c8cb        0x1 
+ .data          0x000000000000c8cc        0x0 tests/simple.o
+ .bss           0x000000000000c8cc        0x0 tests/simple.o
  .riscv.attributes
-                0x000000000000c8d0       0x1f tests/bltu.o
- *fill*         0x000000000000c8ef        0x1 
- .data          0x000000000000c8f0        0x0 tests/remu.o
- .bss           0x000000000000c8f0        0x0 tests/remu.o
+                0x000000000000c8cc       0x1f tests/simple.o
+ *fill*         0x000000000000c8eb        0x1 
+ .data          0x000000000000c8ec        0x0 tests/slli.o
+ .bss           0x000000000000c8ec        0x0 tests/slli.o
  .riscv.attributes
-                0x000000000000c8f0       0x1f tests/remu.o
- *fill*         0x000000000000c90f        0x1 
- .data          0x000000000000c910        0x0 tests/simple.o
- .bss           0x000000000000c910        0x0 tests/simple.o
+                0x000000000000c8ec       0x1f tests/slli.o
+ *fill*         0x000000000000c90b        0x1 
+ .data          0x000000000000c90c        0x0 tests/andi.o
+ .bss           0x000000000000c90c        0x0 tests/andi.o
  .riscv.attributes
-                0x000000000000c910       0x1f tests/simple.o
- *fill*         0x000000000000c92f        0x1 
- .data          0x000000000000c930        0x0 tests/slli.o
- .bss           0x000000000000c930        0x0 tests/slli.o
+                0x000000000000c90c       0x1f tests/andi.o
+ *fill*         0x000000000000c92b        0x1 
+ .data          0x000000000000c92c        0x0 tests/ori.o
+ .bss           0x000000000000c92c        0x0 tests/ori.o
  .riscv.attributes
-                0x000000000000c930       0x1f tests/slli.o
- *fill*         0x000000000000c94f        0x1 
- .data          0x000000000000c950        0x0 tests/andi.o
- .bss           0x000000000000c950        0x0 tests/andi.o
+                0x000000000000c92c       0x1f tests/ori.o
+ *fill*         0x000000000000c94b        0x1 
+ .data          0x000000000000c94c        0x8 tests/lh.o
+ .bss           0x000000000000c954        0x0 tests/lh.o
  .riscv.attributes
-                0x000000000000c950       0x1f tests/andi.o
- *fill*         0x000000000000c96f        0x1 
- .data          0x000000000000c970        0x0 tests/ori.o
- .bss           0x000000000000c970        0x0 tests/ori.o
+                0x000000000000c954       0x1f tests/lh.o
+ *fill*         0x000000000000c973        0x1 
+ .data          0x000000000000c974        0x0 tests/srl.o
+ .bss           0x000000000000c974        0x0 tests/srl.o
  .riscv.attributes
-                0x000000000000c970       0x1f tests/ori.o
- *fill*         0x000000000000c98f        0x1 
- .data          0x000000000000c990        0x8 tests/lh.o
- .bss           0x000000000000c998        0x0 tests/lh.o
+                0x000000000000c974       0x1f tests/srl.o
+ *fill*         0x000000000000c993        0x1 
+ .data          0x000000000000c994        0x0 tests/jal.o
+ .bss           0x000000000000c994        0x0 tests/jal.o
  .riscv.attributes
-                0x000000000000c998       0x1f tests/lh.o
- *fill*         0x000000000000c9b7        0x1 
- .data          0x000000000000c9b8        0x0 tests/srl.o
- .bss           0x000000000000c9b8        0x0 tests/srl.o
+                0x000000000000c994       0x1f tests/jal.o
+ *fill*         0x000000000000c9b3        0x1 
+ .data          0x000000000000c9b4        0x0 tests/add.o
+ .bss           0x000000000000c9b4        0x0 tests/add.o
  .riscv.attributes
-                0x000000000000c9b8       0x1f tests/srl.o
- *fill*         0x000000000000c9d7        0x1 
- .data          0x000000000000c9d8        0x0 tests/jal.o
- .bss           0x000000000000c9d8        0x0 tests/jal.o
+                0x000000000000c9b4       0x1f tests/add.o
+ *fill*         0x000000000000c9d3        0x1 
+ .data          0x000000000000c9d4        0x0 tests/and.o
+ .bss           0x000000000000c9d4        0x0 tests/and.o
  .riscv.attributes
-                0x000000000000c9d8       0x1f tests/jal.o
- *fill*         0x000000000000c9f7        0x1 
- .data          0x000000000000c9f8        0x0 tests/add.o
- .bss           0x000000000000c9f8        0x0 tests/add.o
+                0x000000000000c9d4       0x1f tests/and.o
+ *fill*         0x000000000000c9f3        0x1 
+ .data          0x000000000000c9f4        0x0 tests/srli.o
+ .bss           0x000000000000c9f4        0x0 tests/srli.o
  .riscv.attributes
-                0x000000000000c9f8       0x1f tests/add.o
- *fill*         0x000000000000ca17        0x1 
- .data          0x000000000000ca18        0x0 tests/and.o
- .bss           0x000000000000ca18        0x0 tests/and.o
+                0x000000000000c9f4       0x1f tests/srli.o
+ *fill*         0x000000000000ca13        0x1 
+ .data          0x000000000000ca14        0x0 tests/j.o
+ .bss           0x000000000000ca14        0x0 tests/j.o
  .riscv.attributes
-                0x000000000000ca18       0x1f tests/and.o
- *fill*         0x000000000000ca37        0x1 
- .data          0x000000000000ca38        0x0 tests/srli.o
- .bss           0x000000000000ca38        0x0 tests/srli.o
+                0x000000000000ca14       0x1f tests/j.o
+ *fill*         0x000000000000ca33        0x1 
+ .data          0x000000000000ca34        0x0 tests/bne.o
+ .bss           0x000000000000ca34        0x0 tests/bne.o
  .riscv.attributes
-                0x000000000000ca38       0x1f tests/srli.o
- *fill*         0x000000000000ca57        0x1 
- .data          0x000000000000ca58        0x0 tests/j.o
- .bss           0x000000000000ca58        0x0 tests/j.o
+                0x000000000000ca34       0x1f tests/bne.o
+ *fill*         0x000000000000ca53        0x1 
+ .data          0x000000000000ca54        0x0 tests/bge.o
+ .bss           0x000000000000ca54        0x0 tests/bge.o
  .riscv.attributes
-                0x000000000000ca58       0x1f tests/j.o
- *fill*         0x000000000000ca77        0x1 
- .data          0x000000000000ca78        0x0 tests/bne.o
- .bss           0x000000000000ca78        0x0 tests/bne.o
+                0x000000000000ca54       0x1f tests/bge.o
+ *fill*         0x000000000000ca73        0x1 
+ .data          0x000000000000ca74        0x0 tests/rem.o
+ .bss           0x000000000000ca74        0x0 tests/rem.o
  .riscv.attributes
-                0x000000000000ca78       0x1f tests/bne.o
- *fill*         0x000000000000ca97        0x1 
- .data          0x000000000000ca98        0x0 tests/bge.o
- .bss           0x000000000000ca98        0x0 tests/bge.o
+                0x000000000000ca74       0x1f tests/rem.o
+ *fill*         0x000000000000ca93        0x1 
+ .data          0x000000000000ca94        0x0 tests/mulh.o
+ .bss           0x000000000000ca94        0x0 tests/mulh.o
  .riscv.attributes
-                0x000000000000ca98       0x1f tests/bge.o
- *fill*         0x000000000000cab7        0x1 
- .data          0x000000000000cab8        0x0 tests/rem.o
- .bss           0x000000000000cab8        0x0 tests/rem.o
+                0x000000000000ca94       0x1f tests/mulh.o
+ *fill*         0x000000000000cab3        0x1 
+ .data          0x000000000000cab4        0x0 tests/mulhsu.o
+ .bss           0x000000000000cab4        0x0 tests/mulhsu.o
  .riscv.attributes
-                0x000000000000cab8       0x1f tests/rem.o
- *fill*         0x000000000000cad7        0x1 
- .data          0x000000000000cad8        0x0 tests/mulh.o
- .bss           0x000000000000cad8        0x0 tests/mulh.o
+                0x000000000000cab4       0x1f tests/mulhsu.o
+ .data          0x000000000000cad3        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
+ .bss           0x000000000000cad3        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
+ .comment       0x000000000000cad3       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
+ *fill*         0x000000000000cad3        0x1 
+ .eh_frame      0x000000000000cad4       0x64 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
  .riscv.attributes
-                0x000000000000cad8       0x1f tests/mulh.o
- *fill*         0x000000000000caf7        0x1 
- .data          0x000000000000caf8        0x0 tests/mulhsu.o
- .bss           0x000000000000caf8        0x0 tests/mulhsu.o
+                0x000000000000cb38       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
+ .data          0x000000000000cb54        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
+ .bss           0x000000000000cb54        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
+ .comment       0x000000000000cb54       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
+ .eh_frame      0x000000000000cb54       0x68 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
  .riscv.attributes
-                0x000000000000caf8       0x1f tests/mulhsu.o
- .data          0x000000000000cb17        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
- .bss           0x000000000000cb17        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
- .comment       0x000000000000cb17       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
- *fill*         0x000000000000cb17        0x1 
- .eh_frame      0x000000000000cb18       0x64 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
+                0x000000000000cbbc       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
+ .data          0x000000000000cbd8        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
+ .bss           0x000000000000cbd8        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
+ .comment       0x000000000000cbd8       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
+ .eh_frame      0x000000000000cbd8       0x60 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
  .riscv.attributes
-                0x000000000000cb7c       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_divdi3.o)
- .data          0x000000000000cb98        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
- .bss           0x000000000000cb98        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
- .comment       0x000000000000cb98       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
- .eh_frame      0x000000000000cb98       0x68 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
+                0x000000000000cc38       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
+ .data          0x000000000000cc54        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
+ .bss           0x000000000000cc54        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
+ .comment       0x000000000000cc54       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
+ .eh_frame      0x000000000000cc54       0x64 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
  .riscv.attributes
-                0x000000000000cc00       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_moddi3.o)
- .data          0x000000000000cc1c        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
- .bss           0x000000000000cc1c        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
- .comment       0x000000000000cc1c       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
- .eh_frame      0x000000000000cc1c       0x60 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
+                0x000000000000ccb8       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
+ .data          0x000000000000ccd4        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(muldi3.o)
+ .bss           0x000000000000ccd4        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(muldi3.o)
  .riscv.attributes
-                0x000000000000cc7c       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_udivdi3.o)
- .data          0x000000000000cc98        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
- .bss           0x000000000000cc98        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
- .comment       0x000000000000cc98       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
- .eh_frame      0x000000000000cc98       0x64 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
+                0x000000000000ccd4       0x1a /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(muldi3.o)
+ .data          0x000000000000ccee        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
+ .bss           0x000000000000ccee        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
+ .comment       0x000000000000ccee       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
  .riscv.attributes
-                0x000000000000ccfc       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_umoddi3.o)
- .data          0x000000000000cd18        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(muldi3.o)
- .bss           0x000000000000cd18        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(muldi3.o)
+                0x000000000000ccee       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
+ .data          0x000000000000cd0a        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(div.o)
+ .bss           0x000000000000cd0a        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(div.o)
  .riscv.attributes
-                0x000000000000cd18       0x1a /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(muldi3.o)
- .data          0x000000000000cd32        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
- .bss           0x000000000000cd32        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
- .comment       0x000000000000cd32       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
+                0x000000000000cd0a       0x1a /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(div.o)
+ .data          0x000000000000cd24        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
+ .bss           0x000000000000cd24        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
+ .rodata        0x000000000000cd24      0x100 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
+                0x000000000000cd24                __clz_tab
+ .comment       0x000000000000ce24       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
  .riscv.attributes
-                0x000000000000cd32       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(multi3.o)
- .data          0x000000000000cd4e        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(div.o)
- .bss           0x000000000000cd4e        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(div.o)
- .riscv.attributes
-                0x000000000000cd4e       0x1a /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(div.o)
- .data          0x000000000000cd68        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
- .bss           0x000000000000cd68        0x0 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
- .rodata        0x000000000000cd68      0x100 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
-                0x000000000000cd68                __clz_tab
- .comment       0x000000000000ce68       0x12 /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
- .riscv.attributes
-                0x000000000000ce68       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
-                0x000000000000ce84                end = .
-                0x000000000000ce84                . = ALIGN (0x4)
+                0x000000000000ce24       0x1c /opt/tools/riscv/lib/gcc/riscv32-unknown-elf/8.3.0/libgcc.a(_clz.o)
+                0x000000000000ce40                end = .
+                0x000000000000ce40                . = ALIGN (0x4)
 LOAD firmware/start.o
 LOAD firmware/irq.o
 LOAD firmware/print.o

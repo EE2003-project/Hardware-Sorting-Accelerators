@@ -134,13 +134,13 @@ module axi4_mem_periph #(
 		end else
 		if ((latched_raddr >= 32'h3000_0000) && (latched_raddr < 32'h3100_0000)) begin
             mem_axi_rdata <= sortmem[(latched_raddr-'h3000_0000)>>2];
-            $display("reading from %08x", latched_raddr);
+            //$display("reading from %08x", latched_raddr);
             mem_axi_rvalid <= 1;
 			latched_raddr_en = 0; 
 		end else
             if (latched_raddr == 32'h4000_0000) begin
                 mem_axi_rdata <= y_valid;
-                $display("yvaliddata=%08x", {31'b0,y_valid});
+                //$display("yvaliddata=%08x", mem_axi_rdata);
             mem_axi_rvalid <= 1;
 			latched_raddr_en = 0;
 		end else
@@ -189,6 +189,7 @@ module axi4_mem_periph #(
 		end else 
             if(latched_waddr == 32'h4000_0000)begin
                 rst <= latched_wdata[0];
+                //$display("writing to rst", latched_wdata);
 		end else
             if(latched_waddr==32'h4000_0004) begin
 			x_valid <= 1;

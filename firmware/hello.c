@@ -41,6 +41,7 @@ void read_inputs(void){
         int x=*p1;
         print_str("number =");
         print_dec(x);
+        print_str("\n");
         *p2=x;
         p1++;
         p2++;
@@ -51,21 +52,12 @@ void sort(void){
     *p=1;
     *p=0;
     bool y_valid=false;
-    int count=0;
     while(!y_valid){
-        int x = *p;
-        x=x+4;
-        print_str("number x=");
-        print_dec(x);
-        print_str("\n");
+        volatile int x = (*p);
         if((x & 0x01) == 1){
             y_valid=true;
         }
-        count++;
     }
-     print_str("count =");
-    print_dec(count);
-    print_str("\n");
 }
 void write_outputs(void){
     volatile int *p = (int *)SORTMEM;
@@ -75,6 +67,7 @@ void write_outputs(void){
         int x=*p;
         print_str("number =");
         print_dec(x);
+        print_str("\n");
         sort_print_dec(x);
         p++;
     }
