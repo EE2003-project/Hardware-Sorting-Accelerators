@@ -1,0 +1,6 @@
+1) Change LOG_INPUT in generate.py and sort_tb.v files.
+2) Run python3 generate.py(generates random 2^(LOG_INPUT) inputs and stores it in sort.mem)
+3) Run the testbench as usual
+ iverilog -o sort sort_tb.v
+ vvp sort
+4)test.vcd will generate waveform

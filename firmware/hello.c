@@ -70,13 +70,18 @@ void bubble_c(int a[],int n){
 int read_inputs(int a[]){
     volatile int *p1 = (int *)SORTMEM;
     int n=*p1;
+    print_str("size =");
+    print_dec(n);
+    print_str("\n");
     p1++;
     volatile int *p2 = (int *)X_BASE;
     for(int i=0;i<n;i++){
         int x=*p1;
-        print_str("number =");
-        print_dec(x);
-        print_str("\n");
+        if(i<5){
+            print_str("number =");
+            print_dec(x);
+            print_str("\n");
+        }
         *p2=x;
         a[i]=x;
         p1++;
@@ -102,11 +107,13 @@ void write_outputs(void){
     p= (int *)Y_BASE;
     for(int i=0;i<n;i++){
         int x=*p;
-        print_str("number =");
-        print_dec(x);
-        print_str("\n");
+        if(i<5){
+            print_str("number =");
+            print_dec(x);
+            print_str("\n");
+        }
         sort_print_dec(x);
-        sort_print_chr('\n');
+        sort_print_chr('\n'); 
         p++;
     }
 }

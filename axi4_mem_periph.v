@@ -1,8 +1,7 @@
-`include "bitonic_sorting_top.v"
 module axi4_mem_periph #(
 	parameter AXI_TEST = 0,
 	parameter VERBOSE = 0,
-    parameter LOG_INPUT_NUM =4,  //change here
+    parameter LOG_INPUT_NUM =2,  //change here
 	parameter DATAWIDTH =32,
 	parameter SIGNED = 0,
 	parameter ASCENDING =1
@@ -49,10 +48,46 @@ module axi4_mem_periph #(
     reg [DATAWIDTH-1:0] x_1[0:(2**LOG_INPUT_NUM)-1];
     wire [DATAWIDTH-1:0] y_1[0:(2**LOG_INPUT_NUM)-1];
     wire [0:0] y_valid;
-    bitonic_sorting_top #
+    initial begin
+        x_valid =1;
+    end
+    
+    /*bitonic_sort_top #
     (
         .LOG_INPUT_NUM(LOG_INPUT_NUM),
-		.DATAWIDTH(DATAWIDTH),
+		.DATA_WIDTH(DATAWIDTH),
+		//.SIGNED(SIGNED),
+        .ASCENDING(ASCENDING)
+    )
+    M(
+        .clk(clk),
+        .rst(rst),
+		.x_valid(x_valid),
+        .x(x),
+        .y(y),
+		.y_valid(y_valid)
+    );*/
+    
+    /*odd_even_merge_top #
+    (
+        .LOG_INPUT_NUM(LOG_INPUT_NUM),
+		.DATA_WIDTH(DATAWIDTH),
+		//.SIGNED(SIGNED),
+        .ASCENDING(ASCENDING)
+    )
+    M(
+        .clk(clk),
+        .rst(rst),
+		.x_valid(x_valid),
+        .x(x),
+        .y(y),
+		.y_valid(y_valid)
+    );*/
+    
+    /*brick_sort_top #
+    (
+        .LOG_INPUT_NUM(LOG_INPUT_NUM),
+		.DATA_WIDTH(DATAWIDTH),
 		.SIGNED(SIGNED),
         .ASCENDING(ASCENDING)
     )
@@ -63,7 +98,9 @@ module axi4_mem_periph #(
         .x(x),
         .y(y),
 		.y_valid(y_valid)
-    );
+    );*/
+    
+    
     
     genvar j;
     for (j=0;j<2**LOG_INPUT_NUM;j=j+1) begin

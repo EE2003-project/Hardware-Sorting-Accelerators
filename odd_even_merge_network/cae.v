@@ -1,7 +1,5 @@
-
-
 `timescale 1ns / 1ns
-module input_2 #
+module cae1 #
 (
     parameter DATA_WIDTH = 8,
     parameter SIGNED = 0,
@@ -49,6 +47,7 @@ begin
                 end
             end
         end else if (SIGNED == 1) begin
+            y_valid <= x_valid;
             if (ASCENDING == 1) begin
                 if ($signed(x_0) < $signed(x_1)) begin
                     y_0 <= x_0;
