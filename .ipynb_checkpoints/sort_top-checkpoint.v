@@ -1,6 +1,6 @@
 module sort_top #
 (
-    parameter LOG_INPUT_NUM = 7, // Eg: If LOG_INPUT_NUM=4, then input number is 2**4=16 
+    parameter LOG_INPUT_NUM = 8, // Eg: If LOG_INPUT_NUM=4, then input number is 2**4=16 
     parameter ALGORITHM = 2,
     parameter DATA_WIDTH = 32,
     parameter SIGNED = 0,
@@ -68,7 +68,7 @@ end
 else if(ALGORITHM == 2)begin
     odd_even_merge_top #
     (
-        .LOG_INPUT_NUM(LOG_INPUT_NUM),
+        .LOG_INPUT(LOG_INPUT_NUM),
         .DATA_WIDTH(DATA_WIDTH),
 		//.SIGNED(SIGNED),
         .ASCENDING(ASCENDING)
@@ -85,7 +85,7 @@ end
 else begin
     bitonic_sort_top #
     (
-        .LOG_INPUT_NUM(LOG_INPUT_NUM),
+        .LOG_INPUT(LOG_INPUT_NUM),
         .DATA_WIDTH(DATA_WIDTH),
         //.SIGNED(SIGNED),
         .ASCENDING(ASCENDING)

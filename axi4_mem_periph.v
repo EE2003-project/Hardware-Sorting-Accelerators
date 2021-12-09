@@ -1,5 +1,5 @@
 module axi4_mem_periph #(
-    parameter LOG_INPUT_NUM =7,
+    parameter LOG_INPUT_NUM =4,
     parameter ALGORITHM = 2,
     
 	parameter AXI_TEST = 0,

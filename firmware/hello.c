@@ -135,26 +135,27 @@ void write_outputs(int n){
 
 
 void hello(void){
-    /*int a[2048];
+    int a[2048];
     print_str("Reading input\n");
     int n=read_inputs(a);
-    print_str("Sorting in C using merge sort\n");
+    
+    /*print_str("Sorting in C using merge sort\n");
     int t_start = get_num_cycles();
-    //merge_c(a,0,n-1);
+    merge_c(a,0,n-1);
     int t_end   = get_num_cycles();
     print_str("Sorted the data in ");
 	print_dec(t_end - t_start);
-    print_str(" cycles.\n");*/
+    print_str(" cycles.\n");
     
-    /*print_str("Sorting in C using bubble sort\n");
+    print_str("Sorting in C using bubble sort\n");
     t_start = get_num_cycles();
-    //bubble_c(a,n);
+    bubble_c(a,n);
     t_end   = get_num_cycles();
     print_str("Sorted the data in ");
     print_dec(t_end - t_start);
-    print_str(" cycles.\n");
+    print_str(" cycles.\n");*/
     
-    print_str("Sorting in hardware\n");*/
+    print_str("Sorting in hardware\n");
     int t_start = get_num_cycles();
     sort();
     int t_end   = get_num_cycles();
@@ -162,8 +163,8 @@ void hello(void){
 	print_dec(t_end - t_start);
 	print_str(" cycles.\n");
     
-    /*print_str("Writing output\n");
+    print_str("Writing output\n");
     write_outputs(n);
     
-    print_str("\nAll done...\n");*/
+    print_str("\nAll done...\n");
 }

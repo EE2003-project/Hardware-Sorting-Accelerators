@@ -1,7 +1,7 @@
 `timescale 1ns / 1ns
 module odd_even_merge_top #
 (
-    parameter LOG_INPUT = 7, 
+    parameter LOG_INPUT = 8, 
     parameter DATA_WIDTH = 32,
     parameter SIGNED = 0,
     parameter ASCENDING = 1
