@@ -3,7 +3,7 @@ from numpy import random
 LOG_INPUT_NUM=int(sys.argv[1])           #change here
 n=2**LOG_INPUT_NUM                         
 x=random.randint(1000, size=(n))
-file = open("firmware/sort.mem","w+")
+file = open("input.mem","w+")
 def f(x):
     y=str(x)[2:]
     z=""

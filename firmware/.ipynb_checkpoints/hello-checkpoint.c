@@ -8,8 +8,6 @@
 #define YVALID 0x4000000C
 #define DOUT 0x40000010
 #define NOW2 0x40000014
-//#define Y_VALID 0x50000000
-//#define Y_BASE 0x50000004
 
 int read_inputs(int a[]);
 void sort(void);
@@ -86,6 +84,7 @@ int read_inputs(int a[]){
     *p4=1;
     *p2=1;
     *p2=0;
+    print_str("Dumping first 3 inputs \n");
     for(int i=0;i<n;i++){
         int x=*p1;
         if(i<3){
@@ -118,11 +117,11 @@ void write_outputs(int n){
     n=n;
     volatile int *p1= (int *)DOUT;
     volatile int *p2= (int *)NOW2;
-    for(int i=0;i<3;i++){   //change here
+    print_str("Dumping first 3 outputs \n");
+    for(int i=0;i<n;i++){   
         *p2=i&1;
         int x=*p1;
-        //*p2=i&1;
-        if(i<5){
+        if(i<3){
             print_str("number =");
             print_dec(x);
             print_str("\n");

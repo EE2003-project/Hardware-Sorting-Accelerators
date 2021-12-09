@@ -1,7 +1,7 @@
 module axi4_mem_periph #(
-    parameter LOG_INPUT_NUM =4,
-    parameter ALGORITHM = 2,
     
+    parameter LOG_INPUT_NUM =3,  // change size here
+    parameter ALGORITHM = 3,     // change algorithm here
 	parameter AXI_TEST = 0,
 	parameter VERBOSE = 0,
 	parameter DATAWIDTH =32,
@@ -51,6 +51,7 @@ module axi4_mem_periph #(
     reg now2;
     wire y_valid;
     
+    //instantiating sorting accelerator
     sort_top #
     (
         .LOG_INPUT_NUM(LOG_INPUT_NUM),
@@ -70,70 +71,6 @@ module axi4_mem_periph #(
         .dout(dout)
     );
     
-    /*wire [DATAWIDTH*(2**LOG_INPUT_NUM)-1:0] x;
-    wire [DATAWIDTH*(2**LOG_INPUT_NUM)-1:0] y;
-    reg [DATAWIDTH-1:0] x_1[0:(2**LOG_INPUT_NUM)-1];
-    wire [DATAWIDTH-1:0] y_1[0:(2**LOG_INPUT_NUM)-1];
-    wire [0:0] y_valid;
-    initial begin
-        x_valid =1;
-    end*/
-    
-    /*bitonic_sort_top #
-    (
-        .LOG_INPUT_NUM(LOG_INPUT_NUM),
-		.DATA_WIDTH(DATAWIDTH),
-		//.SIGNED(SIGNED),
-        .ASCENDING(ASCENDING)
-    )
-    M(
-        .clk(clk),
-        .rst(rst),
-		.x_valid(x_valid),
-        .x(x),
-        .y(y),
-		.y_valid(y_valid)
-    );*/
-    
-    /*odd_even_merge_top #
-    (
-        .LOG_INPUT_NUM(LOG_INPUT_NUM),
-		.DATA_WIDTH(DATAWIDTH),
-		//.SIGNED(SIGNED),
-        .ASCENDING(ASCENDING)
-    )
-    M(
-        .clk(clk),
-        .rst(rst),
-		.x_valid(x_valid),
-        .x(x),
-        .y(y),
-		.y_valid(y_valid)
-    );*/
-    
-    /*brick_sort_top #
-    (
-        .LOG_INPUT_NUM(LOG_INPUT_NUM),
-		.DATA_WIDTH(DATAWIDTH),
-		.SIGNED(SIGNED),
-        .ASCENDING(ASCENDING)
-    )
-    M(
-        .clk(clk),
-        .rst(rst),
-		.x_valid(x_valid),
-        .x(x),
-        .y(y),
-		.y_valid(y_valid)
-    );*/
-    
-    
-    
-    /*genvar j;
-    for (j=0;j<2**LOG_INPUT_NUM;j=j+1) begin
-        assign x[32*(j+1)-1:32*j] = x_1[j];
-        assign y_1[j] = y[32*(j+1)-1:32*j];
-    end*/
     
     reg [31:0]   sortmem [0:2**(LOG_INPUT_NUM)]; /* verilator public */
 
@@ -141,7 +78,7 @@ module axi4_mem_periph #(
 	// Could not load this from the test bench for some reason
 	integer i;
 	initial begin
-        $readmemh("firmware/sort.mem", sortmem);
+        $readmemh("input.mem", sortmem);
 	end
 
 	integer out_file;
@@ -217,11 +154,6 @@ module axi4_mem_periph #(
             mem_axi_rdata <= dout;
             mem_axi_rvalid <= 1;
 			latched_raddr_en = 0;
-		/*end else
-		if ((latched_raddr >= 32'h5000_0004) && (latched_raddr < 32'h5100_0000)) begin
-            mem_axi_rdata <= y_1[(latched_raddr-'h5000_0004)>>2];
-            mem_axi_rvalid <= 1;
-			latched_raddr_en = 0;*/
 		end else begin
 			$display("OUT-OF-BOUNDS MEMORY READ FROM %08x", latched_raddr);
 			$finish;
@@ -270,10 +202,6 @@ module axi4_mem_periph #(
 		end else
             if(latched_waddr==32'h4000_0014) begin
                 now2 <= latched_wdata[0];
-		/*end else
-		if ((latched_waddr >= 32'h4000_0008) && (latched_waddr < 32'h4200_0000)) begin
-            //x_1[(latched_waddr - 'h4000_0008)>>2] <= latched_wdata;
-            x_1[(latched_wdata - 'h4000_0008)>>2] <= latched_wdata;*/
 		end else begin
 			$display("OUT-OF-BOUNDS MEMORY WRITE TO %08x", latched_waddr);
             $finish;
