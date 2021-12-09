@@ -3,7 +3,7 @@
 module bitonic_sort_top #
 (
     parameter DATA_WIDTH = 4,
-    parameter LOG_INPUT = 2,
+    parameter LOG_INPUT = 5,
     parameter ASCENDING = 1
 )
 (

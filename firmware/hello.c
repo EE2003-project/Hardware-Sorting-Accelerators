@@ -3,14 +3,17 @@
 #include "sort_print.c"
 #define SORTMEM 0x30000000
 #define RST 0x40000000
-#define X_VALID 0x40000004
-#define X_BASE 0x40000008
+#define DIN 0x40000004
+#define NOW1 0x40000008
+#define YVALID 0x4000000C
+#define DOUT 0x40000010
+#define NOW2 0x40000014
 //#define Y_VALID 0x50000000
-#define Y_BASE 0x50000004
+//#define Y_BASE 0x50000004
 
 int read_inputs(int a[]);
 void sort(void);
-void write_outputs(void);
+void write_outputs(int n);
 void bubble_c(int a[],int n);
 void merge_c(int a[],int low,int high);
 
@@ -74,39 +77,51 @@ int read_inputs(int a[]){
     print_dec(n);
     print_str("\n");
     p1++;
-    volatile int *p2 = (int *)X_BASE;
+    
+    volatile int *p2 = (int *)RST;
+    volatile int *p3=(int *)DIN;
+    volatile int *p4=(int *)NOW1;
+    volatile int *p5=(int *)NOW2;
+    *p5=1;
+    *p4=1;
+    *p2=1;
+    *p2=0;
     for(int i=0;i<n;i++){
         int x=*p1;
-        if(i<5){
+        if(i<3){
             print_str("number =");
             print_dec(x);
             print_str("\n");
         }
-        *p2=x;
+        *p3=x;
+        *p4=i&1;
         a[i]=x;
         p1++;
-        p2++;
     }
     return n;
 }
 void sort(void){
-    volatile int *p = (int *)RST;
-    *p=1;
-    *p=0;
+    volatile int *p1 = (int *)RST;
+    *p1=1;
+    *p1=0;
     bool y_valid=false;
+    volatile int *p2= (int *)YVALID;
     while(!y_valid){
-        volatile int x = (*p);
+        volatile int x = (*p2);
         if((x & 0x01) == 1){
             y_valid=true;
         }
     }
 }
-void write_outputs(void){
-    volatile int *p = (int *)SORTMEM;
-    int n=*p;
-    p= (int *)Y_BASE;
-    for(int i=0;i<n;i++){
-        int x=*p;
+void write_outputs(int n){
+
+    n=n;
+    volatile int *p1= (int *)DOUT;
+    volatile int *p2= (int *)NOW2;
+    for(int i=0;i<3;i++){   //change here
+        *p2=i&1;
+        int x=*p1;
+        //*p2=i&1;
         if(i<5){
             print_str("number =");
             print_dec(x);
@@ -114,42 +129,41 @@ void write_outputs(void){
         }
         sort_print_dec(x);
         sort_print_chr('\n'); 
-        p++;
+        
     }
 }
 
 
 void hello(void){
-    int a[2048];
+    /*int a[2048];
     print_str("Reading input\n");
     int n=read_inputs(a);
-    
     print_str("Sorting in C using merge sort\n");
     int t_start = get_num_cycles();
-    merge_c(a,0,n-1);
+    //merge_c(a,0,n-1);
     int t_end   = get_num_cycles();
     print_str("Sorted the data in ");
 	print_dec(t_end - t_start);
-    print_str(" cycles.\n");
+    print_str(" cycles.\n");*/
     
-    print_str("Sorting in C using bubble sort\n");
+    /*print_str("Sorting in C using bubble sort\n");
     t_start = get_num_cycles();
-    bubble_c(a,n);
+    //bubble_c(a,n);
     t_end   = get_num_cycles();
     print_str("Sorted the data in ");
     print_dec(t_end - t_start);
     print_str(" cycles.\n");
     
-    print_str("Sorting in hardware\n");
-    t_start = get_num_cycles();
+    print_str("Sorting in hardware\n");*/
+    int t_start = get_num_cycles();
     sort();
-    t_end   = get_num_cycles();
+    int t_end   = get_num_cycles();
     print_str("Sorted the data in ");
 	print_dec(t_end - t_start);
 	print_str(" cycles.\n");
     
-    print_str("Writing output\n");
-    write_outputs();
+    /*print_str("Writing output\n");
+    write_outputs(n);
     
-    print_str("\nAll done...\n");
+    print_str("\nAll done...\n");*/
 }
