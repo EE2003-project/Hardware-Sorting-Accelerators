@@ -1,7 +1,7 @@
 module axi4_mem_periph #(
     
     parameter LOG_INPUT_NUM =3,  // change size here
-    parameter ALGORITHM = 3,     // change algorithm here
+    parameter ALGORITHM = 1,     // change algorithm here
 	parameter AXI_TEST = 0,
 	parameter VERBOSE = 0,
 	parameter DATAWIDTH =32,

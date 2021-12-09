@@ -61,7 +61,7 @@ testbench.vvp: testbench.v picorv32.v
 	$(IVERILOG) -o $@ $(subst C,-DCOMPRESSED_ISA,$(COMPRESSED_ISA)) $^
 	chmod -x $@
 
-testbench_mod.vvp: testbench_mod.v axi4_mem_periph.v picorv32.v brick_sort_network/bubble_sorting_top.v brick_sort_network/cae.v brick_sort_network/comp_0.v brick_sort_network/comp_1.v brick_sort_network/comp_block.v brick_sort_network/D_FF.v bitonic_network/bm_chann_unit.v bitonic_network/bm_chann.v bitonic_network/bm.v  bitonic_network/sort_stage.v bitonic_network/bitonic_sort.v bitonic_network/cae.v odd_even_merge_network/odd_even_merge_recursion_submodule.v odd_even_merge_network/odd_even_merge_recursion.v odd_even_merge_network/odd_even_merge_top.v odd_even_merge_network/cae.v sort_top.v
+testbench_mod.vvp: testbench_mod.v axi4_mem_periph.v picorv32.v brick_sort_network/brick_sorting_top.v brick_sort_network/cae.v brick_sort_network/comp_0.v brick_sort_network/comp_1.v brick_sort_network/comp_block.v brick_sort_network/D_FF.v bitonic_network/bm_chann_unit.v bitonic_network/bm_chann.v bitonic_network/bm.v  bitonic_network/sort_stage.v bitonic_network/bitonic_sort.v bitonic_network/cae.v odd_even_merge_network/odd_even_merge_recursion_submodule.v odd_even_merge_network/odd_even_merge_recursion.v odd_even_merge_network/odd_even_merge_top.v odd_even_merge_network/cae.v sort_top.v
 
 	$(IVERILOG) -o $@ $(subst C,-DCOMPRESSED_ISA,$(COMPRESSED_ISA)) $^
 	chmod -x $@
