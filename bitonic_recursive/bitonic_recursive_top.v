@@ -1,9 +1,8 @@
 `timescale 1ns / 1ns
-module odd_even_merge_top #
+module bitonic_recursive_top #
 (
-    parameter LOG_INPUT = 8, 
-    parameter DATA_WIDTH = 32,
-    parameter SIGNED = 0,
+    parameter LOG_INPUT = 5,
+    parameter DATA_WIDTH = 8,
     parameter ASCENDING = 1
 
 )
@@ -14,20 +13,21 @@ module odd_even_merge_top #
     output y_valid
 );
 
-odd_even_merge_recursion # 
+sort # 
 (
     .LOG_INPUT(LOG_INPUT),
     .DATA_WIDTH(DATA_WIDTH),
-    .SIGNED(SIGNED),
     .ASCENDING(ASCENDING)
 )
-odd_even_merge_i
+sort_inst
 (
     .clk(clk),
     .rst(rst),
     .x_valid(x_valid),
     .x(x),
+   
     .y(y),
+    
     .y_valid(y_valid)
 );
 

@@ -66,7 +66,7 @@ if(ALGORITHM == 1)begin
     );
 end
 else if(ALGORITHM == 2)begin
-    odd_even_merge_top #
+    bitonic_recursive_top #
     (
         .LOG_INPUT(LOG_INPUT_NUM),
         .DATA_WIDTH(DATA_WIDTH),

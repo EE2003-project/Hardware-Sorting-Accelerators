@@ -1,9 +1,8 @@
 `timescale 1ns / 1ns
-module odd_even_merge_recursion #
+module sort #
 (
     parameter LOG_INPUT = 4, 
     parameter DATA_WIDTH = 8,
-    parameter SIGNED = 0,
     parameter ASCENDING = 1
 
 )
@@ -15,79 +14,74 @@ module odd_even_merge_recursion #
 );
 
 if (LOG_INPUT > 1) begin
-    wire [DATA_WIDTH*(2**LOG_INPUT)-1 : 0] stage0_rslt;
-    wire stage0_valid;
-
-    //assign y_valid = stage0_valid;
+    wire [DATA_WIDTH*(2**LOG_INPUT)-1 : 0] intm;
+    wire intm_valid;
 
 
-    odd_even_merge_recursion #
+    sort #
     (
         .LOG_INPUT(LOG_INPUT-1),
         .DATA_WIDTH(DATA_WIDTH),
-        .SIGNED(SIGNED),
         .ASCENDING(ASCENDING)
     )
-    inst_stage0_0 
+    r1
     (
         .clk(clk),
         .rst(rst),
         .x_valid(x_valid),
         .x(x[DATA_WIDTH*(2**(LOG_INPUT-1))-1:0]),
-        .y(stage0_rslt[DATA_WIDTH*(2**(LOG_INPUT-1))-1:0]),
-        .y_valid(stage0_valid)
+        .y(intm[DATA_WIDTH*(2**(LOG_INPUT-1))-1:0]),
+        .y_valid(intm_valid)
     );
 
-    odd_even_merge_recursion #
+    sort #
     (
         .LOG_INPUT(LOG_INPUT-1),
         .DATA_WIDTH(DATA_WIDTH),
-        .SIGNED(SIGNED),
-        .ASCENDING(ASCENDING)
+        .ASCENDING(1-ASCENDING)
     )
-    inst_stage0_1 
+    r2
     (
         .clk(clk),
         .rst(rst),
         .x_valid(x_valid),
         .x(x[DATA_WIDTH*(2**LOG_INPUT)-1:DATA_WIDTH*(2**(LOG_INPUT-1))]),
-        .y(stage0_rslt[DATA_WIDTH*(2**LOG_INPUT)-1:DATA_WIDTH*(2**(LOG_INPUT-1))]),
+        .y(intm[DATA_WIDTH*(2**LOG_INPUT)-1:DATA_WIDTH*(2**(LOG_INPUT-1))]),
         .y_valid()
     );
 
-
-    odd_even_merge_recursion_submodule #
+    merge #
     (
         .LOG_INPUT(LOG_INPUT),
         .DATA_WIDTH(DATA_WIDTH),
-        .SIGNED(SIGNED),
         .ASCENDING(ASCENDING)
     )
-    inst_stage1 
+    s0 
     (
         .clk(clk),
         .rst(rst),
-        .x_valid(stage0_valid),
-        .x(stage0_rslt),
-        .y(y),   
+        .x_valid(intm_valid),
+        .x(intm),
+    
+        .y(y),
+        
         .y_valid(y_valid)
     );
 end else if (LOG_INPUT == 1) begin
     cae1 #
     (
-        .DATA_WIDTH(DATA_WIDTH), 
-        .SIGNED(SIGNED),
+        .DATA_WIDTH(DATA_WIDTH),
         .ASCENDING(ASCENDING)
     )
-    cae_1 
+    cae2 
     (
         .clk(clk),
         .rst(rst),
         .x_valid(x_valid),
-        .x_0(x[DATA_WIDTH-1:0]),
-        .x_1(x[DATA_WIDTH*2-1:DATA_WIDTH]),
-        .y_0(y[DATA_WIDTH-1:0]),
-        .y_1(y[DATA_WIDTH*2-1:DATA_WIDTH]),
+        .x1(x[DATA_WIDTH-1:0]),
+        .x2(x[DATA_WIDTH*2-1:DATA_WIDTH]),
+        .y1(y[DATA_WIDTH-1:0]),
+        .y2(y[DATA_WIDTH*2-1:DATA_WIDTH]),
         .y_valid(y_valid)
     );
 end
