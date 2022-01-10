@@ -2,7 +2,7 @@
 
 module brick_sort_top #
 (
-    parameter LOG_INPUT_NUM = 3, // Eg: If LOG_INPUT_NUM=4, then input number is 2**4=16 
+    parameter LOG_INPUT_NUM = 4, // Eg: If LOG_INPUT_NUM=4, then input number is 2**4=16 
     parameter DATA_WIDTH = 32,
     parameter SIGNED = 0,
     parameter ASCENDING = 1

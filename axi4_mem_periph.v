@@ -1,7 +1,7 @@
 module axi4_mem_periph #(
     
-    parameter LOG_INPUT_NUM =5,  // change size here
-    parameter ALGORITHM = 3,     // change algorithm here
+    parameter LOG_INPUT_NUM =3,  // change size here
+    parameter ALGORITHM = 1,     // change algorithm here
 	parameter AXI_TEST = 0,
 	parameter VERBOSE = 0,
 	parameter DATAWIDTH =32,
@@ -72,7 +72,7 @@ module axi4_mem_periph #(
     );
     
     
-    reg [31:0]   sortmem [0:2**(LOG_INPUT_NUM)]; /* verilator public */
+    reg [31:0]   sortmem [0:2**(LOG_INPUT_NUM)] /* verilator public */;
 
 	assign tests_passed = 1;
 	// Could not load this from the test bench for some reason

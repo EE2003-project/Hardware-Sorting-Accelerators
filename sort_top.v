@@ -1,3 +1,4 @@
+//file for interfacing with all three sorting networks
 module sort_top #
 (
     parameter LOG_INPUT_NUM = 8, // Eg: If LOG_INPUT_NUM=4, then input number is 2**4=16 
@@ -15,8 +16,10 @@ module sort_top #
     output y_valid,
     output reg [DATA_WIDTH-1:0] dout
 );
+// to detect change in now1, now2
 reg prev1,prev2;
 wire x_valid;
+// to find port number
 reg [DATA_WIDTH-1:0] cnt1,cnt2;
 reg [DATA_WIDTH-1:0] x1[0:(2**LOG_INPUT_NUM)-1];
 wire [DATA_WIDTH-1:0] y1[0:(2**LOG_INPUT_NUM)-1];

@@ -1,81 +1,67 @@
 
-# Template project 
+# Introduction
 
-This is a template project for the course EE2003 at IIT Madras.
+This is our EE2003 project on Hardware Sorting Accelerators. This is a cleaned up version of our original repository which can be found [here](https://github.com/EE2003-project/Sorting-networks.git) and [here](https://github.com/EE2003-project/nanojpeg.git). We have implemented Brick Sort, Bitonic Sort with and without using recursion. Click here for the detailed project [report](https://drive.google.com/drive/folders/1EBq0m-4CsxQgkZqMKGYmDeAMVYCnmUF5?usp=sharing) and here for the [demo](https://drive.google.com/drive/folders/1EBq0m-4CsxQgkZqMKGYmDeAMVYCnmUF5?usp=sharing). 
 
-*Note*: This is a forked repository of PicoRV32 - the original README is available at [[README_picorv32.md]].
+# Files
 
-Acknowledgements:
+### [Brick Sort](https://git.ee2003.dev.iitm.ac.in/ee19b085/EE2003_Project/src/branch/master/brick_sort_network)
 
-- [PicoRV32](https://github.com/YosysHQ/picorv32) - from C. Wolf (YosysHQ).  
-- [NanoJPEG](https://keyj.emphy.de/nanojpeg/)
+Implementation of Brick Sort which runs in O(n) time
 
+### [Bitonic Sort Network 1(recursive)](https://git.ee2003.dev.iitm.ac.in/ee19b085/EE2003_Project/src/branch/master/bitonic_network1)
 
-## Problem statement
-This is a "starter" project that you can use in case you are unable to define a project of your own.  It includes the code for the [nanojpeg](https://keyj.emphy.de/nanojpeg/) decoder, with some modifications so that it can be run under the constrained environment of the picorv processor.
+Recursive implementaion of bitonic sort runs in O(log^2n) time. Not scalable
 
-This means that you do not have access to things like File Input/Output, memory management (`malloc` etc.) or `printf` style statements that you can usually use for debugging.
+### [Bitonic Sort Network 2 (non recursive)](https://git.ee2003.dev.iitm.ac.in/ee19b085/EE2003_Project/src/branch/master/bitonic_network)
 
-To get around these the code has the following additions:
+Scalable implementaion of bitonic sort runs in O(log^2n) time. 
 
-- A set of functions have been defined in `njmem.c` that can allocate memory for random use.  It uses a very trivial form of memory allocation that only works because our program never needs to `free` memory and try to use it again later.  A set of addresses starting at `0x40000000` are defined for use with the memory management.
-- A set of addresses starting from `0x30000000` are defined for reading from the file.  You first need to run a pre-processing script (`firmware/jpg2hex.py`) to generate the file `firmware/jpg.hex` which will be mapped to this memory range.  This is marked as a read-only memory, so you can only read from that range of addresses.  Since the file size cannot be read this way, the script also puts the size of the file as an `int` in the first 4 bytes of the memory range.
-- Writing to the address `0x20000000` will result in dumping the appropriate byte into the file `output.dump`.  This means that you can use this to do the equivalent of a `fwrite` function in C.  However, the filename is always fixed as it cannot be changed from the C program.
-- There are also two functions defined in `hello.c` that can be used to read out the number of cycles from the CPU at any point.  This can be used, for example, to find out the time taken by the `njDecode` function.  More importantly, you can use a similar technique inside your code to get the time taken for other functions and find out which ones take the longest to run.
+### [generate.py](https://git.ee2003.dev.iitm.ac.in/ee19b085/EE2003_Project/src/branch/master/generate.py)
 
-You will need to read through the code changes in `axi4_mem_periph.v` and `hello.c` etc. in order to understand how all these work.  You will need to understand them properly in order to make any changes or improvements in the code.
+To generate random input numbers for testing
 
-## How to run
+### input.mem and output.dump
 
-### Step 1 - Generate a suitable input
-The code comes with sample data in `firmware/jpg.hex` - this corresponds to the input file `firmware/k8x8.jpg`.  The hex file is generated as follows:
-```sh
-$ cd firmware
-$ python3 jpg2hex.py k8x8.jpg > jpg.hex
+For writing input and output 
+
+### [sort_top.v](https://git.ee2003.dev.iitm.ac.in/ee19b085/EE2003_Project/src/branch/master/sort_top.v), [firmware/hello.c](https://git.ee2003.dev.iitm.ac.in/ee19b085/EE2003_Project/src/branch/master/firmware/hello.c) and [axi4_mem_periph.v](https://git.ee2003.dev.iitm.ac.in/ee19b085/EE2003_Project/src/branch/master/axi4_mem_periph.v)
+
+Files for interfacing the sorting network accelerators with PicoRV32
+
+# How to run?
+
+- Clone the repository
+- To select size of input array to be sorted, change LOG_INPUT_NUM paramater in [axi4_mem_periph.v](https://git.ee2003.dev.iitm.ac.in/ee19b085/EE2003_Project/src/branch/master/axi4_mem_periph.v). If LOG_INPUT_NUM=5, then size=32 etc. 
+- To select the sorting algorithm, change ALGORITHM parameter in [axi4_mem_periph.v](https://git.ee2003.dev.iitm.ac.in/ee19b085/EE2003_Project/src/branch/master/axi4_mem_periph.v). ALGORITHM=1 for Brick Sort, 2 for Bitonic Network 1 and 3 for Bitonic Network 2. 
+- To generate input numbers run python3 generate.py 5. This will generate 32 random input numbers write them into the sort.mem file
+- Run make. You will see the size of array and few input numbers and output numbers on the screen along with other information such as number of clock cycles taken by the algorithm.
+
+```
+ee19b085@ee2003:~/EE2003_Project$ make
+vvp -N testbench_mod.vvp
+WARNING: axi4_mem_periph.v:81: $readmemh(input.mem): Too many words in the file for the requested range [0:8].
+Reading input
+size =32
+Printing first 3 inputs 
+number =366
+number =162
+number =601
+Sorting in hardware
+Sorted the data in 84 cycles.
+Writing output
+Printing first 3 outputs 
+number =41
+number =160
+number =162
+
+All done...
+
 ```
 
-You can replace `k8x8.jpg` with some other JPEG file to try with that.  Note that the system has an overall memory limitation so any file larger than about 100x100 will most likely run into problems.
+# Authors
 
-### Step 2.1 - Build and run with iverilog
-```sh
-$ make
-```
-Just typing the above command (while you are in the `nanojpeg` folder, not inside one of the subfolders) will take care of compiling and running with iverilog.
+- Jeffin Biju(EE19B085), Rohith Rongali(EE19B114), Rajdeep Paul(EE19B109)
 
-**WARNING**: This is *horrendously* slow - it takes about 6-7 *minutes* to run on the default input file, which is just a single JPEG macroblock and the entire image is of size 8 pixels by 7 pixels.
 
-Therefore if you try this with another file (say `kitten.jpg`, which is 24x22 macroblocks in size), you can expect it to take more than 3000 minutes -- that is, more than 2 days to run.  Please do not try this on the EE2003 server - if the system shows excessive load it will be restarted more than once a day as needed, so simulations will almost certainly not run to completion.
 
-### Step 2.2 - Build and run with verilator
-Fortunately, there is a *much* faster verilog simulator called `verilator`.  This works by first converting the Verilog code into C++, compiling it, and running the resulting executable.  This can actually finish simulating the entire `kitten.jpg` input in less than 1 minute.  If you want to test any changes to your code, you are strongly advised to use this approach.
-
-To run this, you can just type 
-```sh
-$ make test_verilator
-```
-This is already set up to take the exact same inputs and generate the same output.
-
-### Step 3 - understand the results
-When you run the code, you will see that it generates a file named `output.dump` in the main `nanojpeg` folder.  You can rename this file as `output.ppm`, and then it should be possible to view this file.  Note that you cannot view it on the server, you will need to download the file to your local machine and then view it.
-
-The default input will generate an image of a kitten that is 8x7 pixels in size -- in other words, if you recognize it as a kitten, you have a very good imagination.  Instead, the actual output generated by running the converter on another PC is also available in the file `firmware/k8x8.ppm`. 
-
-Note that there is currently a bug in the code that results in one extra byte being added to the output.  This means that you cannot directly compare the two files to check for correctness.  However, if you use the command
-```sh
-$ xxd output.dump
-```
-it will dump out the hex formatted output, and here you can see that it matches the original except for the last byte.
-
-## What to do next
-The present code not only runs the decoder, it also prints out the total number of clock cycles taken for the code to run.  The fact that it is slow in simulation is not relevant, so do not try to speed that up.  Instead, your goal should be to identify where the bottleneck is in the existing code, and to see if there are parts of it that can be accelerated in hardware.
-
-Converting the entire code to hardware is not just difficult, it is also probably a bad idea, since there is a lot of conditional logic which is well suited to software, but will result in very bad and irregularly structured hardware.
-
-On the other hand, certain blocks (in particular the DCT computations) are well suited to hardware implementation.  So if you can create a module (similar to the seq_mult in assignment 1) that takes in appropriate inputs, does the computations in hardware and returns the results, there is a chance that you may speed things up.
-
-Why only a chance?  Because the transfer of data into and out of the hardware module will require the CPU to do read/write or load/store operations.  It is quite possible that depending on how this is done, it may end up taking longer in hardware than to just do the computations in software.
-
-You will need to *instrument* your code to find out where your changes will be most effective - that is, put in appropriate `get_num_cycles` calls in places where you can trace the time taken.
-
-## Alternative ideas
-This is, as explained at the beginning, just a *starter* project.  You are welcome to build on this in any way you want, or even completely ignore it and do another project of your own.  For such projects, you are of course expected to run the ideas past the course instructor to ensure that your project idea is feasible and reasonable for the requirements of the course.

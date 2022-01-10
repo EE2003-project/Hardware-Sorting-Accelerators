@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
 `include "sort.v"
 `include "merge.v"
-`include "bitonic_sorting_top.v"
+`include "bitonic_recursive_top.v"
 `include "cae.v"
 
 module sort_tb ();
@@ -41,7 +41,7 @@ module sort_tb ();
     initial #20 rst=1;
     initial #40 rst=0;
 
-    bitonic_sorting_top #(
+    bitonic_recursive_top #(
     .LOG_INPUT(LOG_INPUT_NUM),
     .DATA_WIDTH(DATA_WIDTH),
     .ASCENDING(ASCENDING)

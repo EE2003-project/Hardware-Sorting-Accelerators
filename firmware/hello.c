@@ -84,7 +84,7 @@ int read_inputs(int a[]){
     *p4=1;
     *p2=1;
     *p2=0;
-    print_str("Dumping first 3 inputs \n");
+    print_str("Printing first 3 inputs \n");
     for(int i=0;i<n;i++){
         int x=*p1;
         if(i<3){
@@ -117,7 +117,7 @@ void write_outputs(int n){
     n=n;
     volatile int *p1= (int *)DOUT;
     volatile int *p2= (int *)NOW2;
-    print_str("Dumping first 3 outputs \n");
+    print_str("Printing first 3 outputs \n");
     for(int i=0;i<n;i++){   
         *p2=i&1;
         int x=*p1;

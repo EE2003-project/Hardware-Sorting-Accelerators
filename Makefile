@@ -61,7 +61,7 @@ testbench.vvp: testbench.v picorv32.v
 	$(IVERILOG) -o $@ $(subst C,-DCOMPRESSED_ISA,$(COMPRESSED_ISA)) $^
 	chmod -x $@
 
-testbench_mod.vvp: testbench_mod.v axi4_mem_periph.v picorv32.v brick_sort_network/brick_sorting_top.v brick_sort_network/cae.v brick_sort_network/comp_0.v brick_sort_network/comp_1.v brick_sort_network/comp_block.v brick_sort_network/D_FF.v bitonic_network/bm_chann_unit.v bitonic_network/bm_chann.v bitonic_network/bm.v  bitonic_network/sort_stage.v bitonic_network/bitonic_sort.v bitonic_network/cae.v bitonic_recursive/bitonic_recursive_top.v bitonic_recursive/cae.v bitonic_recursive/merge.v bitonic_recursive/sort.v sort_top.v 
+testbench_mod.vvp: testbench_mod.v axi4_mem_periph.v picorv32.v brick_sort_network/brick_sorting_top.v brick_sort_network/cae.v brick_sort_network/comp_0.v brick_sort_network/comp_1.v brick_sort_network/comp_block.v brick_sort_network/D_FF.v bitonic_network2/bm_chann_unit.v bitonic_network2/bm_chann.v bitonic_network2/bm.v  bitonic_network2/sort_stage.v bitonic_network2/bitonic_sort.v bitonic_network2/cae.v bitonic_network1/bitonic_recursive_top.v bitonic_network1/cae.v bitonic_network1/merge.v bitonic_network1/sort.v sort_top.v 
 
 	$(IVERILOG) -o $@ $(subst C,-DCOMPRESSED_ISA,$(COMPRESSED_ISA)) $^
 	chmod -x $@
@@ -86,8 +86,8 @@ testbench_synth.vvp: testbench.v synth.v
 	$(IVERILOG) -o $@ -DSYNTH_TEST $^
 	chmod -x $@
 
-testbench_verilator: testbench_mod.v picorv32.v axi4_mem_periph.v testbench.cc
-	$(VERILATOR) --cc --exe -Wno-lint -trace --top-module picorv32_wrapper testbench_mod.v picorv32.v axi4_mem_periph.v testbench.cc \
+testbench_verilator: testbench_mod.v picorv32.v axi4_mem_periph.v testbench.cc 
+	$(VERILATOR) --cc --exe -Wno-lint -trace --top-module picorv32_wrapper testbench_mod.v picorv32.v axi4_mem_periph.v testbench.cc  \
 			$(subst C,-DCOMPRESSED_ISA,$(COMPRESSED_ISA)) --Mdir testbench_verilator_dir
 	$(MAKE) -C testbench_verilator_dir -f Vpicorv32_wrapper.mk
 	cp testbench_verilator_dir/Vpicorv32_wrapper testbench_verilator
