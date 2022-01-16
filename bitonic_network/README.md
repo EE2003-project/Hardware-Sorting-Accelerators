@@ -16,7 +16,7 @@
 </ol>
 <br>
 
-![8 input sorting network](/images/bitonic_network.png)
+![8 input sorting network](https://github.com/EE2003-project/Hardware-Sorting-Accelerators/blob/master/bitonic_network/images/bitonic_network.png)
 <br>
 Only inputs of power-2 are allowed.<br>
 <br>
@@ -26,9 +26,9 @@ In each *stage* we have 2<sup>(log<sub>2</sub>n-stage_index-1)</sup> *merge-bloc
 <br>
 Each *merge-block* has *merge-block channels*(NUM_BM_CHANN) whose number is given by log<sub>2</sub>(*number of inputs given to the channel*) which in turn is equal to *stage_index*+1. 
 
-![8 input sorting network](/images/bitonic_network_coloured.jpg)
+![8 input sorting network](https://github.com/EE2003-project/Hardware-Sorting-Accelerators/blob/master/bitonic_network/images/bitonic_network_coloured.jpg)
 <br>
 <br>
 Each *merge-block channel* further has *merge-block channel units*(as coloured in the above image) which finally boil down to CAE blocks.<br>
-![CAE block](/images/cae.png)
+![CAE block](https://github.com/EE2003-project/Hardware-Sorting-Accelerators/blob/master/bitonic_network/images/cae.png)
 
